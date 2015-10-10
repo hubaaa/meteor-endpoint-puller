@@ -19,7 +19,7 @@ Package.onUse(function(api) {
     'http',
     'practicalmeteor:loglevel@1.2.0_2',
     'practicalmeteor:chai@2.1.0_1',
-    'hubaaa:easy-meteor-settings',
+    'hubaaa:easy-meteor-settings@0.1.1',
     'hubaaa:json-pipes@0.1.1'
   ], 'server');
 
