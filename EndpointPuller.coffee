@@ -18,6 +18,7 @@ class hubaaa.EndpointPuller extends hubaaa.JsonPipe
     try
       log.enter('constructor', arguments)
       super(@jsonPipeOptions)
+      console.log("-----------------", @httpOptions)
       expect(@pullOptions).to.be.an 'object'
       @pullOptions.defaultPullInterval ?= EasyMeteorSettings.getSetting('packages.endpoint-puller.defaultPullInterval', 5000)
       expect(@pullOptions.defaultPullInterval).to.be.a('number').that.is.above(999)
@@ -29,6 +30,7 @@ class hubaaa.EndpointPuller extends hubaaa.JsonPipe
     try
       log.enter('pull', arguments)
       delete @pullTimer if @pullTimer?
+      @httpOptions.params = @_buildParams()
       result = HTTP.get @endpoint, @httpOptions
       if @httpOptions.headers['If-Modified-Since']?
         # No new events related to the user
@@ -63,3 +65,15 @@ class hubaaa.EndpointPuller extends hubaaa.JsonPipe
       Meteor.setTimeout @pull, @pullOptions.defaultPullInterval if not @pullTimer?
     finally
       log.return()
+
+  _buildParams: ()=>
+    try
+      log.fineEnter("_buildParams")
+      # Preserve old httpOptions params
+      params = _.clone(@httpOptions.params || {})
+      # Orverwrite with pullOptions.getUrlParams()
+      params = _.extend(params, (@pullOptions.getUrlParams?() || {}))
+      log.debug("@httpOptions.params:", params)
+      return params
+    finally
+      log.fineReturn()
