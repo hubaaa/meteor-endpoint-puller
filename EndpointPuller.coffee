@@ -29,7 +29,8 @@ class hubaaa.EndpointPuller extends hubaaa.JsonPipe
     try
       log.enter('pull', arguments)
       delete @pullTimer if @pullTimer?
-      @httpOptions.params = @_buildParams()
+      #TODO clone @httpOptions
+      @httpOptions.params = @_getUrlParams()
       result = HTTP.get @endpoint, @httpOptions
       if @httpOptions.headers['If-Modified-Since']?
         # No new events related to the user
@@ -65,9 +66,9 @@ class hubaaa.EndpointPuller extends hubaaa.JsonPipe
     finally
       log.return()
 
-  _buildParams: ()=>
+  _getUrlParams: ()=>
     try
-      log.fineEnter("_buildParams")
+      log.fineEnter("_getUrlParams")
       # Preserve old httpOptions params
       params = _.clone(@httpOptions.params || {})
       # Orverwrite with pullOptions.getUrlParams()
