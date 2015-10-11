@@ -18,7 +18,6 @@ class hubaaa.EndpointPuller extends hubaaa.JsonPipe
     try
       log.enter('constructor', arguments)
       super(@jsonPipeOptions)
-      console.log("-----------------", @httpOptions)
       expect(@pullOptions).to.be.an 'object'
       @pullOptions.defaultPullInterval ?= EasyMeteorSettings.getSetting('packages.endpoint-puller.defaultPullInterval', 5000)
       expect(@pullOptions.defaultPullInterval).to.be.a('number').that.is.above(999)
