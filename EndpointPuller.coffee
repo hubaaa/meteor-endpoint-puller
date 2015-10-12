@@ -45,6 +45,9 @@ class hubaaa.EndpointPuller extends hubaaa.JsonPipe
         # So next request will use it
         log.debug 'last-modified:', result.headers['last-modified']
         @httpOptions.headers['If-Modified-Since'] = result.headers['last-modified']
+        if @pullOptions.lastModifiedCollection
+          expect(@pullOptions.lastModifiedDocId).to.be.ok
+          @pullOptions.lastModifiedCollection.update { _id: @pullOptions.lastModifiedDocId }, { $set: { lastModified: result.headers['last-modified'] } }
       else if @httpOptions.headers['If-Modified-Since']?
         # If we didn't get a last-modified header, we can't use an If-Modified-Since header
         log.debug 'Deleting If-Modified-Since header for next request.'
