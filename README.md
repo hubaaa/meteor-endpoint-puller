@@ -28,6 +28,8 @@ Json. Pull specific options, including:
 
 - defaultPullInterval: in milliseconds, default 5 seconds. Can't be less than 1 second.
 
+- lastModifiedCollection: Mongo.Collection. If it exists, then lastModifiedDocId must exist too. Saves the HTTP "Last-Modified" header in the collection, so that "If-Modified-Since" can be sent in the first request. This is to avoid processing events that have already been proceeded in a previous run.
+
 ### jsonPipeOptions
 
 Since an EndpointPuller inherits from JsonPipe, all the option supported by [JsonPipe](https://atmospherejs.com/hubaaa/json-pipes).
