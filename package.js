@@ -1,6 +1,6 @@
 Package.describe({
   name: 'hubaaa:endpoint-puller',
-  version: '0.1.1',
+  version: '0.1.2',
   // Brief, one-line summary of the package.
   summary: 'Pulls API endpoints, checking for new data and passing it through json pipes.',
   // URL to the Git repository containing the source code for this package.
@@ -33,7 +33,7 @@ Package.onTest(function(api) {
     'practicalmeteor:mocha@2.1.0_3'
   ], 'server');
 
-  api.use('hubaaa:endpoint-puller@0.1.0', 'server');
+  api.use('hubaaa:endpoint-puller@0.1.2', 'server');
 
   api.addFiles('EndpointPullerTest.coffee', 'server');
 });
